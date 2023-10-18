@@ -30,74 +30,74 @@ import coil.transform.CircleCropTransformation
 
 @Composable
 fun CryptoItem(crypto: CryptoPrices){
-//    Card(
-//        modifier = Modifier
-//            .padding(8.dp, 4.dp)
-//            .fillMaxWidth()
-//            .height(80.dp),
-//        shape = RoundedCornerShape(15.dp),
-//        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-//    ) {
-//        Surface() {
-//            Row(
-//                Modifier
-//                    .padding(4.dp)
-//                    .fillMaxSize(),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Spacer(modifier = Modifier.padding(5.dp))
-////                Image(
-////                    painter = rememberImagePainter(
-////                        data = crypto.image,
-////                        builder = {
-////                            scale(Scale.FILL)
-////                            placeholder(coil.compose.base.R.drawable.notification_action_background)
-////                            transformations(CircleCropTransformation())
-////                        }
-////                    ),
-////                    contentDescription = null,
-////                    modifier = Modifier
-////                        .fillMaxHeight()
-////                        .weight(0.2f)
-////                )
-//                Spacer(modifier = Modifier.padding(10.dp))
-//                Column(
-//                    verticalArrangement = Arrangement.Center,
-//                    modifier = Modifier
-//                        .padding(4.dp)
-//                        .fillMaxHeight()
-//                        .weight(0.8f)
-//                ) {
-////                    Text(
-////                        text = crypto.name,
-////                        style = MaterialTheme.typography.bodyLarge,
-////                        fontWeight = FontWeight.Bold
-////                    )
-////                    Text(
-////                        text = crypto.symbol,
-////                        style = MaterialTheme.typography.bodyLarge,
-////                        fontSize = 12.sp,
-////                        maxLines = 2,
-////                        overflow = TextOverflow.Ellipsis
-////                    )
-//                }
+    Card(
+        modifier = Modifier
+            .padding(8.dp, 4.dp)
+            .fillMaxWidth()
+            .height(80.dp),
+        shape = RoundedCornerShape(15.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Surface() {
+            Row(
+                Modifier
+                    .padding(4.dp)
+                    .fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Spacer(modifier = Modifier.padding(5.dp))
+                Image(
+                    painter = rememberImagePainter(
+                        data = crypto.image,
+                        builder = {
+                            scale(Scale.FILL)
+                            placeholder(coil.compose.base.R.drawable.notification_action_background)
+                            transformations(CircleCropTransformation())
+                        }
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(0.2f)
+                )
+                Spacer(modifier = Modifier.padding(10.dp))
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxHeight()
+                        .weight(0.8f)
+                ) {
+                    Text(
+                        text = crypto.name,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = crypto.symbol,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontSize = 12.sp,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
                 Text(
                     text = crypto.current_price.toString(),
-                    //style = MaterialTheme.typography.bodyLarge,
-                    //modifier = Modifier.padding(end = 10.dp)
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(end = 10.dp)
                 )
             }
-//        }
-//    }
-//}
+        }
+    }
+}
 
 @Preview
 @Composable
 fun SimplePreview(){
     CryptoItem(crypto = CryptoPrices(
-//        name = "Bitcoin",
-//        symbol = "btc",
-//        image = "",
+        name = "Bitcoin",
+        symbol = "btc",
+        image = "",
         current_price = 26650.0
     ))
 }

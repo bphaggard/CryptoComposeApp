@@ -19,6 +19,15 @@ val dancingScriptFamily = FontFamily(
     Font(R.font.dancingscript_semibold, FontWeight.SemiBold)
 )
 
+val oswaldFamily = FontFamily(
+    Font(R.font.oswald_extralight, FontWeight.ExtraLight),
+    Font(R.font.oswald_light, FontWeight.Light),
+    Font(R.font.oswald_medium, FontWeight.Medium),
+    Font(R.font.oswald_regular, FontWeight.Normal),
+    Font(R.font.oswald_bold, FontWeight.Bold),
+    Font(R.font.oswald_semibold, FontWeight.SemiBold)
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(

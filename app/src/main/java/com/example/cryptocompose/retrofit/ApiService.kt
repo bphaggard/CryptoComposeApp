@@ -7,9 +7,8 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("/api/v3/coin/markets?vs_currency=usd&ids=bitcoin%2C%20ethereum%2C%20solana%2C%20cardano%2C%20" +
-            "litecoin&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
-    suspend fun getCrypto(): Response<CryptoPrices>
+    @GET("/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
+    suspend fun getCrypto(): Response<List<CryptoPrices>>
 
     companion object{
         var apiService: ApiService? = null

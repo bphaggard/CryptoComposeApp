@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.cryptocompose.CrypptoCard
+import com.example.cryptocompose.screencomponents.CryptoCard
 import com.example.cryptocompose.R
 import com.example.cryptocompose.ui.theme.bebasNeueFamily
 import com.example.cryptocompose.ui.theme.dancingScriptFamily
@@ -78,25 +78,25 @@ fun CryptoList(navController: NavController){
             fontFamily = bebasNeueFamily,
             fontSize = 22.sp)
         Spacer(modifier = Modifier.padding(30.dp))
-        CrypptoCard(
+        CryptoCard(
             title = "Bitcoin",
             image = R.drawable.btc,
             modifier = Modifier,
             onClick = { navController.navigate(Screen.BTC.route) })
         Spacer(modifier = Modifier.padding(8.dp))
-        CrypptoCard(
+        CryptoCard(
             title = "Ethereum",
             image = R.drawable.eth,
             modifier = Modifier,
             onClick = { navController.navigate(Screen.ETH.route) })
         Spacer(modifier = Modifier.padding(8.dp))
-        CrypptoCard(
+        CryptoCard(
             title = "Cardano",
             image = R.drawable.ada,
             modifier = Modifier,
             onClick = {})
         Spacer(modifier = Modifier.padding(8.dp))
-        CrypptoCard(
+        CryptoCard(
             title = "Litecoin",
             image = R.drawable.ltc,
             modifier = Modifier,

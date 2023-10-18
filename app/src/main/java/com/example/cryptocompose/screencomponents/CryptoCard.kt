@@ -1,4 +1,4 @@
-package com.example.cryptocompose
+package com.example.cryptocompose.screencomponents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -20,9 +20,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cryptocompose.ui.theme.oswaldFamily
 
 @Composable
-fun CrypptoCard(
+fun CryptoCard(
     title: String,
     image: Int,
     modifier: Modifier,
@@ -46,12 +47,13 @@ fun CrypptoCard(
         ) {
             Image(
                 painter = painterResource(id = image),
-                contentDescription = "btc logo")
+                contentDescription = "crypto logo")
             Spacer(modifier = Modifier.padding(10.dp))
             Text(
                 text = title,
                 fontSize = 22.sp,
-                fontWeight = FontWeight.Normal)
+                fontFamily = oswaldFamily,
+                fontWeight = FontWeight.Light)
         }
     }
 }

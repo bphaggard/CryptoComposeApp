@@ -28,8 +28,8 @@ fun NavGraph(
         ){
             BitcoinPrice(
                 mainViewModel = MainViewModel(),
-                navController,
-                cryptoViewModel = CryptoViewModel())
+                navController
+            )
         }
         composable(
             route = Screen.ETH.route

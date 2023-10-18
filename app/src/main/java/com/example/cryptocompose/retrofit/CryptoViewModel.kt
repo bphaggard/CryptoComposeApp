@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 
 class CryptoViewModel: ViewModel() {
     var cryptoListResponse: List<CryptoPrices> by mutableStateOf(listOf())
-    var cryptoCurrent: CryptoPrices by mutableStateOf(CryptoPrices(0.0))
     var errorMessage: String by mutableStateOf("")
 
     fun getCryptoList() {
@@ -23,7 +22,7 @@ class CryptoViewModel: ViewModel() {
 
                     if (cryptoList != null) {
                         // Update the list if the response is successful
-                        cryptoCurrent = cryptoList
+                        cryptoListResponse = cryptoList
                     } else {
                         // Handle the case where the response body is null
                         errorMessage = "Response body is null"
