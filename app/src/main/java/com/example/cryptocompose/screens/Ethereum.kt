@@ -1,6 +1,7 @@
 package com.example.cryptocompose.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -25,11 +27,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.cryptocompose.MainViewModel
 import com.example.cryptocompose.R
 import com.example.cryptocompose.screencomponents.CurrenciesCard
 import com.example.cryptocompose.screencomponents.TopCryptoCard
@@ -38,7 +42,11 @@ import com.example.cryptocompose.ui.theme.eth_color
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun EthereumPrice(navController: NavController){
+fun EthereumPrice(
+    mainViewModel: MainViewModel,
+    navController: NavController
+){
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -67,17 +75,23 @@ fun EthereumPrice(navController: NavController){
                 TopCryptoCard(
                     image = R.drawable.eth_logo,
                     label = "current ETH price :",
-                    value = "")
+                    value = mainViewModel.currentEth)
                 Spacer(modifier = Modifier.padding(20.dp))
                 OutlinedTextField(
-                    value = "",
-                    onValueChange = {  },
+                    value = mainViewModel.userEthInput,
+                    onValueChange = { mainViewModel.userEthInput = it },
                     label = { Text(text = "enter your ETH amount") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
                 Spacer(modifier = Modifier.padding(20.dp))
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                              if (mainViewModel.userEthInput.isNotEmpty()){
+                                  mainViewModel.computeCurrentEthValues()
+                              } else {
+                                  Toast.makeText(context, "Enter some value", Toast.LENGTH_SHORT).show()
+                              }
+                    },
                     colors = ButtonDefaults.buttonColors(eth_color),
                     elevation = ButtonDefaults.elevatedButtonElevation(
                         defaultElevation = 5.dp
@@ -89,9 +103,9 @@ fun EthereumPrice(navController: NavController){
                     usLabel = "ETH value in USD :",
                     euLabel = "ETH value in EUR :",
                     czLabel = "ETH value in CZK :",
-                    usValue = "",
-                    euValue = "",
-                    czValue = "")
+                    usValue = mainViewModel.ethValue,
+                    euValue = mainViewModel.eurValue,
+                    czValue = mainViewModel.czkValue)
                 Spacer(modifier = Modifier.padding(20.dp))
             }
         })
@@ -100,5 +114,7 @@ fun EthereumPrice(navController: NavController){
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun EthPreview(){
-    EthereumPrice(navController = rememberNavController())
+    EthereumPrice(
+        mainViewModel = MainViewModel(),
+        navController = rememberNavController())
 }

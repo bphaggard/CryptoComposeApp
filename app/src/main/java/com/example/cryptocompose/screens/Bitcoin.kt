@@ -62,7 +62,6 @@ fun BitcoinPrice(mainViewModel: MainViewModel,
                  navController: NavController
 ){
 
-
     val context = LocalContext.current
 
     Scaffold(
@@ -119,16 +118,16 @@ fun BitcoinPrice(mainViewModel: MainViewModel,
                 }
                 Spacer(modifier = Modifier.padding(20.dp))
                 OutlinedTextField(
-                    value = mainViewModel.userInput,
-                    onValueChange = { mainViewModel.userInput = it },
+                    value = mainViewModel.userBtcInput,
+                    onValueChange = { mainViewModel.userBtcInput = it },
                     label = { Text(text = "enter your BTC amount") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
                 Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
-                        if (mainViewModel.userInput.isNotEmpty()){
-                            mainViewModel.computeCurrentValues()
+                        if (mainViewModel.userBtcInput.isNotEmpty()){
+                            mainViewModel.computeCurrentBtcValues()
                         } else {
                             Toast.makeText(context, "Enter some value", Toast.LENGTH_SHORT).show()
                         }
