@@ -1,6 +1,6 @@
 # CryptoComposeApp
 
-App where you can convert cryptocurrencies to USD, EUR and CZK. I used free API from coingecko for actual crypto currencies data.
+App where you can convert cryptocurrencies to USD, EUR and CZK. I used free API from coingecko for actual crypto currencies data. Theme made for light and dark version.
 
 app is not finished yet
 
