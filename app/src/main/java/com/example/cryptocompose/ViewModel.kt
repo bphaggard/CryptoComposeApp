@@ -16,13 +16,19 @@ class MainViewModel : ViewModel() {
 
     var currentBtc by mutableStateOf("")
     var currentEth by mutableStateOf("")
+    var currentAda by mutableStateOf("")
+    var currentLtc by mutableStateOf("")
     var btcValue by mutableStateOf("")
     var ethValue by mutableStateOf("")
+    var adaValue by mutableStateOf("")
+    var ltcValue by mutableStateOf("")
     var eurValue by mutableStateOf("")
     var czkValue by mutableStateOf("")
 
     var userBtcInput by mutableStateOf("")
     var userEthInput by mutableStateOf("")
+    var userAdaInput by mutableStateOf("")
+    var userLtcInput by mutableStateOf("")
 
     fun computeCurrentBtcValues(){
         if (userBtcInput.isEmpty()){
@@ -72,6 +78,54 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun computeCurrentAdaValues(){
+        if (userAdaInput.isEmpty()){
+            currentAda = ""
+            adaValue = ""
+            eurValue = ""
+            czkValue = ""
+        } else {
+            runBlocking {
+                val ada_value = async { findAdaValue() }
+                val eur_value = async { findEurValue() }
+                val czk_value = async { findCzkValue() }
+                val cryptoAmount = userAdaInput.toDouble()
+                val adaCurrent = ada_value.await().toBigDecimal().setScale(2, RoundingMode.UP)
+                val usdCurrent = "${ ada_value.await() * cryptoAmount }".toDouble()
+                val eurCurrent = usdCurrent * eur_value.await()
+                val czkCurrent = usdCurrent * czk_value.await()
+                currentAda = adaCurrent.toString()
+                adaValue = usdCurrent.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+                eurValue = eurCurrent.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+                czkValue = czkCurrent.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+            }
+        }
+    }
+
+    fun computeCurrentLtcValues(){
+        if (userLtcInput.isEmpty()){
+            currentLtc = ""
+            ltcValue = ""
+            eurValue = ""
+            czkValue = ""
+        } else {
+            runBlocking {
+                val ltc_value = async { findLtcValue() }
+                val eur_value = async { findEurValue() }
+                val czk_value = async { findCzkValue() }
+                val cryptoAmount = userLtcInput.toDouble()
+                val ltcCurrent = ltc_value.await().toBigDecimal().setScale(2, RoundingMode.UP)
+                val usdCurrent = "${ ltc_value.await() * cryptoAmount }".toDouble()
+                val eurCurrent = usdCurrent * eur_value.await()
+                val czkCurrent = usdCurrent * czk_value.await()
+                currentLtc = ltcCurrent.toString()
+                ltcValue = usdCurrent.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+                eurValue = eurCurrent.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+                czkValue = czkCurrent.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+            }
+        }
+    }
+
     suspend fun findBtcValue(): Double { // stáhne z API hodnotu BTC v USD
         return withContext(Dispatchers.IO) {
             val response = URL("https://api.coindesk.com/v1/bpi/currentprice.json").readText()
@@ -89,6 +143,26 @@ class MainViewModel : ViewModel() {
             val eth = json.getJSONObject("ethereum")
             val ethUsValue = eth.toString().getAmount().toDouble()
             ethUsValue
+        }
+    }
+
+    suspend fun findAdaValue(): Double {
+        return withContext(Dispatchers.IO){
+            val response = URL("https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd").readText()
+            val json = JSONObject(response)
+            val ada = json.getJSONObject("cardano")
+            val adaUsValue = ada.toString().getAmount().toDouble()
+            adaUsValue
+        }
+    }
+
+    suspend fun findLtcValue(): Double {
+        return withContext(Dispatchers.IO){
+            val response = URL("https://api.coingecko.com/api/v3/simple/price?ids=litecoin&vs_currencies=usd").readText()
+            val json = JSONObject(response)
+            val ltc = json.getJSONObject("litecoin")
+            val ltcUsValue = ltc.toString().getAmount().toDouble()
+            ltcUsValue
         }
     }
 

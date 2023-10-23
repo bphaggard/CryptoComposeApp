@@ -94,13 +94,13 @@ fun CryptoList(navController: NavController){
             title = "Cardano",
             image = R.drawable.ada,
             modifier = Modifier,
-            onClick = {})
+            onClick = { navController.navigate(Screen.ADA.route) })
         Spacer(modifier = Modifier.padding(8.dp))
         CryptoCard(
             title = "Litecoin",
             image = R.drawable.ltc,
             modifier = Modifier,
-            onClick = {})
+            onClick = { navController.navigate(Screen.LTC.route) })
     }
 }
 

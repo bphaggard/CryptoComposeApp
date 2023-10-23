@@ -4,6 +4,8 @@ import androidx.compose.ui.graphics.Color
 
 val btc_color = Color(0xFFFF9800)
 val eth_color = Color(0xFF607D8B)
+val ada_color = Color(0xFF0153B5)
+val ltc_color = Color(0xFFA19C9C)
 
 val md_theme_light_primary = Color(0xFF515c6b)
 val md_theme_light_onPrimary = Color(0xFF000000)
