@@ -4,4 +4,4 @@ App where you can convert cryptocurrencies to USD, EUR and CZK. I used free API 
 
 app is not finished yet
 
-![light_dark](https://github.com/bphaggard/CryptoComposeApp/assets/129317531/9922f80d-41cb-4b8f-8586-9144df8d64d2)
+![light_dark1](https://github.com/bphaggard/CryptoComposeApp/assets/129317531/2f3f32e8-a866-451f-ab6c-83b5c4289796)
