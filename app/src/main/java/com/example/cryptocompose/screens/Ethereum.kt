@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -31,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cryptocompose.MainViewModel
@@ -43,10 +43,10 @@ import com.example.cryptocompose.ui.theme.eth_color
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun EthereumPrice(
-    mainViewModel: MainViewModel,
     navController: NavController
 ){
     val context = LocalContext.current
+    val viewModel = viewModel<MainViewModel>()
 
     Scaffold(
         topBar = {
@@ -75,19 +75,19 @@ fun EthereumPrice(
                 TopCryptoCard(
                     image = R.drawable.eth_logo,
                     label = "current ETH price :",
-                    value = mainViewModel.currentEth)
+                    value = viewModel.currentEth)
                 Spacer(modifier = Modifier.padding(20.dp))
                 OutlinedTextField(
-                    value = mainViewModel.userEthInput,
-                    onValueChange = { mainViewModel.userEthInput = it },
+                    value = viewModel.userEthInput,
+                    onValueChange = { viewModel.userEthInput = it },
                     label = { Text(text = "enter your ETH amount") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
                 Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
-                              if (mainViewModel.userEthInput.isNotEmpty()){
-                                  mainViewModel.computeCurrentEthValues()
+                              if (viewModel.userEthInput.isNotEmpty()){
+                                  viewModel.computeCurrentEthValues()
                               } else {
                                   Toast.makeText(context, "Enter some value", Toast.LENGTH_SHORT).show()
                               }
@@ -103,9 +103,9 @@ fun EthereumPrice(
                     usLabel = "ETH value in USD :",
                     euLabel = "ETH value in EUR :",
                     czLabel = "ETH value in CZK :",
-                    usValue = mainViewModel.ethValue,
-                    euValue = mainViewModel.eurValue,
-                    czValue = mainViewModel.czkValue)
+                    usValue = viewModel.ethValue,
+                    euValue = viewModel.eurValue,
+                    czValue = viewModel.czkValue)
                 Spacer(modifier = Modifier.padding(20.dp))
             }
         })
@@ -115,6 +115,5 @@ fun EthereumPrice(
 @Composable
 fun EthPreview(){
     EthereumPrice(
-        mainViewModel = MainViewModel(),
         navController = rememberNavController())
 }

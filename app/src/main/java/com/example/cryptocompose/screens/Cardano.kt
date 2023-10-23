@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cryptocompose.MainViewModel
@@ -37,16 +38,15 @@ import com.example.cryptocompose.R
 import com.example.cryptocompose.screencomponents.CurrenciesCard
 import com.example.cryptocompose.screencomponents.TopCryptoCard
 import com.example.cryptocompose.ui.theme.ada_color
-import com.example.cryptocompose.ui.theme.eth_color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CardanoPrice(
-    mainViewModel: MainViewModel,
     navController: NavController
 ){
     val context = LocalContext.current
+    val viewModel = viewModel<MainViewModel>()
 
     Scaffold(
         topBar = {
@@ -75,19 +75,19 @@ fun CardanoPrice(
                 TopCryptoCard(
                     image = R.drawable.cardano_logo,
                     label = "current ADA price :",
-                    value = mainViewModel.currentAda)
+                    value = viewModel.currentAda)
                 Spacer(modifier = Modifier.padding(20.dp))
                 OutlinedTextField(
-                    value = mainViewModel.userAdaInput,
-                    onValueChange = { mainViewModel.userAdaInput = it },
+                    value = viewModel.userAdaInput,
+                    onValueChange = { viewModel.userAdaInput = it },
                     label = { Text(text = "enter your ADA amount") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
                 Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
-                        if (mainViewModel.userAdaInput.isNotEmpty()){
-                            mainViewModel.computeCurrentAdaValues()
+                        if (viewModel.userAdaInput.isNotEmpty()){
+                            viewModel.computeCurrentAdaValues()
                         } else {
                             Toast.makeText(context, "Enter some value", Toast.LENGTH_SHORT).show()
                         }
@@ -103,9 +103,9 @@ fun CardanoPrice(
                     usLabel = "ADA value in USD :",
                     euLabel = "ADA value in EUR :",
                     czLabel = "ADA value in CZK :",
-                    usValue = mainViewModel.adaValue,
-                    euValue = mainViewModel.eurValue,
-                    czValue = mainViewModel.czkValue)
+                    usValue = viewModel.adaValue,
+                    euValue = viewModel.eurValue,
+                    czValue = viewModel.czkValue)
                 Spacer(modifier = Modifier.padding(20.dp))
             }
         })
@@ -115,6 +115,5 @@ fun CardanoPrice(
 @Composable
 fun AdaPreview(){
     CardanoPrice(
-        mainViewModel = MainViewModel(),
         navController = rememberNavController())
 }

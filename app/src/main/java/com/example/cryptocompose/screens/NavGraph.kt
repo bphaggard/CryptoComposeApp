@@ -22,30 +22,22 @@ fun NavGraph(
         composable(
             route = Screen.BTC.route
         ){
-            BitcoinPrice(
-                mainViewModel = MainViewModel(),
-                navController)
+            BitcoinPrice(navController)
         }
         composable(
             route = Screen.ETH.route
         ){
-            EthereumPrice(
-                mainViewModel = MainViewModel(),
-                navController)
+            EthereumPrice(navController)
         }
         composable(
             route = Screen.ADA.route
                 ){
-            CardanoPrice(
-                mainViewModel = MainViewModel(),
-                navController)
+            CardanoPrice(navController)
         }
         composable(
             route = Screen.LTC.route
         ){
-            LitecoinPrice(
-                mainViewModel = MainViewModel(),
-                navController)
+            LitecoinPrice(navController)
         }
     }
 }

@@ -30,10 +30,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cryptocompose.MainViewModel
 import com.example.cryptocompose.R
+import com.example.cryptocompose.network.ConnectivityObserver
+import com.example.cryptocompose.network.NetworkConnectivityObserver
 import com.example.cryptocompose.screencomponents.CurrenciesCard
 import com.example.cryptocompose.screencomponents.TopCryptoCard
 import com.example.cryptocompose.ui.theme.ltc_color
@@ -42,10 +45,10 @@ import com.example.cryptocompose.ui.theme.ltc_color
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun LitecoinPrice(
-    mainViewModel: MainViewModel,
     navController: NavController
 ){
     val context = LocalContext.current
+    val viewModel = viewModel<MainViewModel>()
 
     Scaffold(
         topBar = {
@@ -74,19 +77,19 @@ fun LitecoinPrice(
                 TopCryptoCard(
                     image = R.drawable.litecoin_logo,
                     label = "current LTC price :",
-                    value = mainViewModel.currentLtc)
+                    value = viewModel.currentLtc)
                 Spacer(modifier = Modifier.padding(20.dp))
                 OutlinedTextField(
-                    value = mainViewModel.userLtcInput,
-                    onValueChange = { mainViewModel.userLtcInput = it },
+                    value = viewModel.userLtcInput,
+                    onValueChange = { viewModel.userLtcInput = it },
                     label = { Text(text = "enter your LTC amount") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
                 Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
-                        if (mainViewModel.userLtcInput.isNotEmpty()){
-                            mainViewModel.computeCurrentLtcValues()
+                        if (viewModel.userLtcInput.isNotEmpty()){
+                            viewModel.computeCurrentLtcValues()
                         } else {
                             Toast.makeText(context, "Enter some value", Toast.LENGTH_SHORT).show()
                         }
@@ -102,9 +105,9 @@ fun LitecoinPrice(
                     usLabel = "LTC value in USD :",
                     euLabel = "LTC value in EUR :",
                     czLabel = "LTC value in CZK :",
-                    usValue = mainViewModel.ltcValue,
-                    euValue = mainViewModel.eurValue,
-                    czValue = mainViewModel.czkValue)
+                    usValue = viewModel.ltcValue,
+                    euValue = viewModel.eurValue,
+                    czValue = viewModel.czkValue)
                 Spacer(modifier = Modifier.padding(20.dp))
             }
         })
@@ -114,7 +117,7 @@ fun LitecoinPrice(
 @Composable
 fun LtcPreview(){
     LitecoinPrice(
-        mainViewModel = MainViewModel(),
+
         navController = rememberNavController()
     )
 }
