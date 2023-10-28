@@ -76,14 +76,19 @@ fun EthereumPrice(
                     image = R.drawable.eth_logo,
                     label = "current ETH price :",
                     value = viewModel.currentEth)
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 OutlinedTextField(
                     value = viewModel.userEthInput,
-                    onValueChange = { viewModel.userEthInput = it },
+                    onValueChange = { newValue ->
+                        val formattedValue = newValue.replace(',', '.') // Replace commas with dots
+                        if (formattedValue.count { it == '.' } <= 1) { // Ensure there is at most one dot
+                            viewModel.userEthInput = formattedValue
+                        }
+                    },
                     label = { Text(text = "enter your ETH amount") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
                               if (viewModel.userEthInput.isNotEmpty()){
@@ -98,7 +103,7 @@ fun EthereumPrice(
                     )) {
                     Text(text = "CONVERT")
                 }
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 CurrenciesCard(
                     usLabel = "ETH value in USD :",
                     euLabel = "ETH value in EUR :",
@@ -106,7 +111,7 @@ fun EthereumPrice(
                     usValue = viewModel.ethValue,
                     euValue = viewModel.eurValue,
                     czValue = viewModel.czkValue)
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
             }
         })
 }

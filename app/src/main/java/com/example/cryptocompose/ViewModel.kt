@@ -1,8 +1,16 @@
 package com.example.cryptocompose
 
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -187,5 +195,45 @@ class MainViewModel : ViewModel() {
     fun String.getAmount(): String {
         return substring(indexOfFirst { it.isDigit() }, indexOfLast { it.isDigit() } + 1)
         .filter { it.isDigit() || it == '.' }
+    }
+
+    @Composable
+    fun DecimalInputField(
+        value: String,
+        onValueChange: (String) -> Unit,
+    ) {
+        var text by remember { mutableStateOf(value) }
+
+        fun isDecimalValid(text: String): Boolean {
+            val trimmed = text.trim() // Remove leading/trailing spaces
+            return try {
+                // Check if the string can be parsed as a double and contains at most one decimal point
+                trimmed.toDouble()
+                trimmed.count { it == '.' } <= 1
+            } catch (e: NumberFormatException) {
+                false
+            }
+        }
+        OutlinedTextField(
+            value = text,
+            onValueChange = {
+                val newValue = it.replace(',', '.') // Replace commas with dots
+                if (isDecimalValid(newValue)) {
+                    text = newValue
+                    onValueChange(newValue)
+                }
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            singleLine = true,
+            isError = !isDecimalValid(text)
+        )
+
+        if (!isDecimalValid(text)) {
+            Text(
+                text = "Invalid input",
+                color = Color.Red,
+                fontSize = 12.sp
+            )
+        }
     }
 }

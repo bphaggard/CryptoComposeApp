@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -103,20 +105,25 @@ fun BitcoinPrice(
                             text = "current BTC price :"
                         )
                         Text(
-                            text = viewModel.currentBtc.toString(),
+                            text = viewModel.currentBtc,
                             fontSize = 30.sp,
                             fontWeight = FontWeight.Bold
                         )
                     }
                 }
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 OutlinedTextField(
                     value = viewModel.userBtcInput,
-                    onValueChange = { viewModel.userBtcInput = it },
+                    onValueChange = { newValue ->
+                        val formattedValue = newValue.replace(',', '.') // Replace commas with dots
+                        if (formattedValue.count { it == '.' } <= 1) { // Ensure there is at most one dot
+                            viewModel.userBtcInput = formattedValue
+                        }
+                    },
                     label = { Text(text = "enter your BTC amount") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
                         if (viewModel.userBtcInput.isNotEmpty()){
@@ -133,7 +140,7 @@ fun BitcoinPrice(
                 {
                     Text(text = "CONVERT")
                 }
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 CurrenciesCard(
                     usLabel = "BTC value in USD :",
                     euLabel = "BTC value in EUR :",
@@ -142,7 +149,7 @@ fun BitcoinPrice(
                     euValue = viewModel.eurValue,
                     czValue = viewModel.czkValue
                 )
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
             }
         })
 }

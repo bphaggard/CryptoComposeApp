@@ -76,14 +76,19 @@ fun CardanoPrice(
                     image = R.drawable.cardano_logo,
                     label = "current ADA price :",
                     value = viewModel.currentAda)
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 OutlinedTextField(
                     value = viewModel.userAdaInput,
-                    onValueChange = { viewModel.userAdaInput = it },
+                    onValueChange = { newValue ->
+                        val formattedValue = newValue.replace(',', '.') // Replace commas with dots
+                        if (formattedValue.count { it == '.' } <= 1) { // Ensure there is at most one dot
+                            viewModel.userAdaInput = formattedValue
+                        }
+                    },
                     label = { Text(text = "enter your ADA amount") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
                         if (viewModel.userAdaInput.isNotEmpty()){
@@ -98,7 +103,7 @@ fun CardanoPrice(
                     )) {
                     Text(text = "CONVERT")
                 }
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 CurrenciesCard(
                     usLabel = "ADA value in USD :",
                     euLabel = "ADA value in EUR :",
@@ -106,7 +111,7 @@ fun CardanoPrice(
                     usValue = viewModel.adaValue,
                     euValue = viewModel.eurValue,
                     czValue = viewModel.czkValue)
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
             }
         })
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,7 +33,7 @@ fun CurrenciesCard(
 ){
     Card(
         modifier = Modifier
-            .fillMaxHeight(0.6f)
+            .height(200.dp)
             .fillMaxWidth(0.9f),
         shape = RoundedCornerShape(30.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)

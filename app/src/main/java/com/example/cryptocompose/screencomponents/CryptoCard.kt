@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.ImagePainter.State.Empty.painter
 import com.example.cryptocompose.ui.theme.oswaldFamily
 
 @Composable
@@ -46,6 +48,7 @@ fun CryptoCard(
             horizontalArrangement = Arrangement.Start
         ) {
             Image(
+                modifier = Modifier.fillMaxHeight(0.8f),
                 painter = painterResource(id = image),
                 contentDescription = "crypto logo")
             Spacer(modifier = Modifier.padding(10.dp))

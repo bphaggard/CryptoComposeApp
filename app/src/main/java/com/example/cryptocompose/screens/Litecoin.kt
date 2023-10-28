@@ -35,8 +35,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.cryptocompose.MainViewModel
 import com.example.cryptocompose.R
-import com.example.cryptocompose.network.ConnectivityObserver
-import com.example.cryptocompose.network.NetworkConnectivityObserver
 import com.example.cryptocompose.screencomponents.CurrenciesCard
 import com.example.cryptocompose.screencomponents.TopCryptoCard
 import com.example.cryptocompose.ui.theme.ltc_color
@@ -78,14 +76,19 @@ fun LitecoinPrice(
                     image = R.drawable.litecoin_logo,
                     label = "current LTC price :",
                     value = viewModel.currentLtc)
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 OutlinedTextField(
                     value = viewModel.userLtcInput,
-                    onValueChange = { viewModel.userLtcInput = it },
+                    onValueChange = { newValue ->
+                        val formattedValue = newValue.replace(',', '.') // Replace commas with dots
+                        if (formattedValue.count { it == '.' } <= 1) { // Ensure there is at most one dot
+                            viewModel.userLtcInput = formattedValue
+                        }
+                    },
                     label = { Text(text = "enter your LTC amount") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
                         if (viewModel.userLtcInput.isNotEmpty()){
@@ -100,7 +103,7 @@ fun LitecoinPrice(
                     )) {
                     Text(text = "CONVERT")
                 }
-                Spacer(modifier = Modifier.padding(20.dp))
+                //Spacer(modifier = Modifier.padding(20.dp))
                 CurrenciesCard(
                     usLabel = "LTC value in USD :",
                     euLabel = "LTC value in EUR :",
@@ -108,7 +111,7 @@ fun LitecoinPrice(
                     usValue = viewModel.ltcValue,
                     euValue = viewModel.eurValue,
                     czValue = viewModel.czkValue)
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
             }
         })
 }
