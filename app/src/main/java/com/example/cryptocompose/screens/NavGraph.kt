@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.cryptocompose.MainViewModel
 
 @Composable
 fun NavGraph(
@@ -12,7 +11,7 @@ fun NavGraph(
 ){
             NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Splash.route
     ){
         composable(
             route = Screen.Home.route
@@ -38,6 +37,11 @@ fun NavGraph(
             route = Screen.LTC.route
         ){
             LitecoinPrice(navController)
+        }
+        composable(
+            route = Screen.Splash.route
+        ){
+            LottieAnimation(navController)
         }
     }
 }

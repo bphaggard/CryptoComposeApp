@@ -33,11 +33,11 @@ fun CryptoCard(
 ){
     Card(
         modifier = Modifier
-            .height(70.dp)
+            .height(65.dp)
             .fillMaxWidth(0.9f)
             .clickable{ onClick() }
             .then(modifier),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(22.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Row(

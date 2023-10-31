@@ -1,16 +1,8 @@
 package com.example.cryptocompose
 
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -20,7 +12,7 @@ import org.json.JSONObject
 import java.math.RoundingMode
 import java.net.URL
 
-class MainViewModel : ViewModel() {
+class MainViewModel: ViewModel() {
 
     var currentBtc by mutableStateOf("")
     var currentEth by mutableStateOf("")
@@ -134,7 +126,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    suspend fun findBtcValue(): Double { // stáhne z API hodnotu BTC v USD
+    private suspend fun findBtcValue(): Double { // stáhne z API hodnotu BTC v USD
         return withContext(Dispatchers.IO) {
             val response = URL("https://api.coindesk.com/v1/bpi/currentprice.json").readText()
             val json = JSONObject(response)
@@ -144,7 +136,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    suspend fun findEthValue(): Double {
+    private suspend fun findEthValue(): Double {
         return withContext(Dispatchers.IO){
             val response = URL("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd").readText()
             val json = JSONObject(response)
@@ -154,7 +146,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    suspend fun findAdaValue(): Double {
+    private suspend fun findAdaValue(): Double {
         return withContext(Dispatchers.IO){
             val response = URL("https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd").readText()
             val json = JSONObject(response)
@@ -164,7 +156,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    suspend fun findLtcValue(): Double {
+    private suspend fun findLtcValue(): Double {
         return withContext(Dispatchers.IO){
             val response = URL("https://api.coingecko.com/api/v3/simple/price?ids=litecoin&vs_currencies=usd").readText()
             val json = JSONObject(response)
@@ -174,7 +166,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    suspend fun findCzkValue(): Double { // stáhne z API hodnotu CZK vůči USD
+    private suspend fun findCzkValue(): Double { // stáhne z API hodnotu CZK vůči USD
         return withContext(Dispatchers.IO) {
             val response = URL("https://api.exchangerate-api.com/v4/latest/USD").readText()
             val json = JSONObject(response)
@@ -183,7 +175,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    suspend fun findEurValue(): Double { // stáhne z API hodnotu EUR vůči USD
+    private suspend fun findEurValue(): Double { // stáhne z API hodnotu EUR vůči USD
         return withContext(Dispatchers.IO) {
             val response = URL("https://api.exchangerate-api.com/v4/latest/USD").readText()
             val json = JSONObject(response)
@@ -192,48 +184,8 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun String.getAmount(): String {
+    private fun String.getAmount(): String {
         return substring(indexOfFirst { it.isDigit() }, indexOfLast { it.isDigit() } + 1)
         .filter { it.isDigit() || it == '.' }
-    }
-
-    @Composable
-    fun DecimalInputField(
-        value: String,
-        onValueChange: (String) -> Unit,
-    ) {
-        var text by remember { mutableStateOf(value) }
-
-        fun isDecimalValid(text: String): Boolean {
-            val trimmed = text.trim() // Remove leading/trailing spaces
-            return try {
-                // Check if the string can be parsed as a double and contains at most one decimal point
-                trimmed.toDouble()
-                trimmed.count { it == '.' } <= 1
-            } catch (e: NumberFormatException) {
-                false
-            }
-        }
-        OutlinedTextField(
-            value = text,
-            onValueChange = {
-                val newValue = it.replace(',', '.') // Replace commas with dots
-                if (isDecimalValid(newValue)) {
-                    text = newValue
-                    onValueChange(newValue)
-                }
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-            singleLine = true,
-            isError = !isDecimalValid(text)
-        )
-
-        if (!isDecimalValid(text)) {
-            Text(
-                text = "Invalid input",
-                color = Color.Red,
-                fontSize = 12.sp
-            )
-        }
     }
 }

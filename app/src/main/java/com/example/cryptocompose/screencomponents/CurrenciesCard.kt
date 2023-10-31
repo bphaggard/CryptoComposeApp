@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.cryptocompose.R
 
@@ -33,9 +34,9 @@ fun CurrenciesCard(
 ){
     Card(
         modifier = Modifier
-            .height(200.dp)
+            .height(170.dp)
             .fillMaxWidth(0.9f),
-        shape = RoundedCornerShape(30.dp),
+        shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
     ) {
         Column(
@@ -51,7 +52,7 @@ fun CurrenciesCard(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Image(
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.height(38.dp),
                     painter = painterResource(id = R.drawable.united_states),
                     contentDescription = "USA_logo"
                 )
@@ -73,7 +74,7 @@ fun CurrenciesCard(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Image(
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.height(38.dp),
                     painter = painterResource(id = R.drawable.european_union),
                     contentDescription = "EUR_logo"
                 )
@@ -95,7 +96,7 @@ fun CurrenciesCard(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Image(
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.height(38.dp),
                     painter = painterResource(id = R.drawable.czech_republic),
                     contentDescription = "CZK_logo"
                 )
@@ -111,4 +112,16 @@ fun CurrenciesCard(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewCard(){
+    CurrenciesCard(
+        usLabel = "BTC value in USD :",
+        euLabel = "BTC value in EUR :",
+        czLabel = "BTC value in CZK :",
+        usValue = "34212.12",
+        euValue = "29854.42",
+        czValue = "1125963.32")
 }

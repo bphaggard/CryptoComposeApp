@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,6 +33,8 @@ import com.example.cryptocompose.ui.theme.dancingScriptFamily
 @Composable
 fun CryptoList(navController: NavController){
 
+    val scrollState = rememberScrollState()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -49,7 +50,8 @@ fun CryptoList(navController: NavController){
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
                 Row(
                     modifier = Modifier.fillMaxHeight(0.5f)
@@ -76,43 +78,43 @@ fun CryptoList(navController: NavController){
                 }
             }
         }
-        Spacer(modifier = Modifier.padding(30.dp))
+        Spacer(modifier = Modifier.fillMaxHeight(0.12f))
         Text(
             text = "choose your cryptocurrency",
             fontFamily = bebasNeueFamily,
             fontSize = 22.sp)
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.fillMaxHeight(0.08f))
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.padding(10.dp))
-            CryptoCard(
-                title = "Bitcoin",
-                image = R.drawable.btc,
-                modifier = Modifier,
-                onClick = { navController.navigate(Screen.BTC.route) })
-            Spacer(modifier = Modifier.padding(8.dp))
-            CryptoCard(
-                title = "Ethereum",
-                image = R.drawable.eth,
-                modifier = Modifier,
-                onClick = { navController.navigate(Screen.ETH.route) })
-            Spacer(modifier = Modifier.padding(8.dp))
-            CryptoCard(
-                title = "Cardano",
-                image = R.drawable.ada,
-                modifier = Modifier,
-                onClick = { navController.navigate(Screen.ADA.route) })
-            Spacer(modifier = Modifier.padding(8.dp))
-            CryptoCard(
-                title = "Litecoin",
-                image = R.drawable.ltc,
-                modifier = Modifier,
-                onClick = { navController.navigate(Screen.LTC.route) })
-            Spacer(modifier = Modifier.padding(10.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
+                CryptoCard(
+                    title = "Bitcoin",
+                    image = R.drawable.btc,
+                    modifier = Modifier,
+                    onClick = { navController.navigate(Screen.BTC.route) })
+                Spacer(modifier = Modifier.padding(8.dp))
+                CryptoCard(
+                    title = "Ethereum",
+                    image = R.drawable.eth,
+                    modifier = Modifier,
+                    onClick = { navController.navigate(Screen.ETH.route) })
+                Spacer(modifier = Modifier.padding(8.dp))
+                CryptoCard(
+                    title = "Cardano",
+                    image = R.drawable.ada,
+                    modifier = Modifier,
+                    onClick = { navController.navigate(Screen.ADA.route) })
+                Spacer(modifier = Modifier.padding(8.dp))
+                CryptoCard(
+                    title = "Litecoin",
+                    image = R.drawable.ltc,
+                    modifier = Modifier,
+                    onClick = { navController.navigate(Screen.LTC.route) })
+                Spacer(modifier = Modifier.padding(10.dp))
         }
     }
 }
