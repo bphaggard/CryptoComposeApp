@@ -3,15 +3,16 @@ package com.example.cryptocompose.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -33,7 +34,7 @@ import com.example.cryptocompose.ui.theme.dancingScriptFamily
 @Composable
 fun CryptoList(navController: NavController){
 
-    val scrollState = rememberScrollState()
+    val scrollState = rememberLazyListState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -84,37 +85,40 @@ fun CryptoList(navController: NavController){
             fontFamily = bebasNeueFamily,
             fontSize = 22.sp)
         Spacer(modifier = Modifier.fillMaxHeight(0.08f))
-        Column(
+        LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState),
+                .fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-                Spacer(modifier = Modifier.padding(10.dp))
+        ){
+            item {
                 CryptoCard(
                     title = "Bitcoin",
                     image = R.drawable.btc,
                     modifier = Modifier,
                     onClick = { navController.navigate(Screen.BTC.route) })
-                Spacer(modifier = Modifier.padding(8.dp))
+            }
+            item {
                 CryptoCard(
                     title = "Ethereum",
                     image = R.drawable.eth,
                     modifier = Modifier,
                     onClick = { navController.navigate(Screen.ETH.route) })
-                Spacer(modifier = Modifier.padding(8.dp))
+            }
+            item {
                 CryptoCard(
                     title = "Cardano",
                     image = R.drawable.ada,
                     modifier = Modifier,
                     onClick = { navController.navigate(Screen.ADA.route) })
-                Spacer(modifier = Modifier.padding(8.dp))
+            }
+            item {
                 CryptoCard(
                     title = "Litecoin",
                     image = R.drawable.ltc,
                     modifier = Modifier,
                     onClick = { navController.navigate(Screen.LTC.route) })
-                Spacer(modifier = Modifier.padding(10.dp))
+            }
         }
     }
 }

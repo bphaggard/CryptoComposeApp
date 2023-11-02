@@ -91,6 +91,9 @@ fun CardanoPrice(
                 //Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
+                        if (!viewModel.hasInternetConnection() && viewModel.userAdaInput.isNotEmpty()){
+                            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
+                        }
                         if (viewModel.userAdaInput.isNotEmpty()){
                             viewModel.computeCurrentAdaValues()
                         } else {

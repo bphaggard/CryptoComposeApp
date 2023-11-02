@@ -126,6 +126,9 @@ fun BitcoinPrice(
                 //Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
+                        if (!viewModel.hasInternetConnection() && viewModel.userBtcInput.isNotEmpty()){
+                            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
+                        }
                         if (viewModel.userBtcInput.isNotEmpty()){
                             viewModel.computeCurrentBtcValues()
                         } else {

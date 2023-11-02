@@ -1,9 +1,19 @@
 package com.example.cryptocompose
 
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.TYPE_ETHERNET
+import android.net.ConnectivityManager.TYPE_WIFI
+import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
+import android.net.NetworkCapabilities.TRANSPORT_ETHERNET
+import android.net.NetworkCapabilities.TRANSPORT_WIFI
+import android.os.Build
+import android.provider.ContactsContract.CommonDataKinds.Email.TYPE_MOBILE
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -12,7 +22,7 @@ import org.json.JSONObject
 import java.math.RoundingMode
 import java.net.URL
 
-class MainViewModel: ViewModel() {
+class MainViewModel(app: Application): AndroidViewModel(app) {
 
     var currentBtc by mutableStateOf("")
     var currentEth by mutableStateOf("")
@@ -31,6 +41,13 @@ class MainViewModel: ViewModel() {
     var userLtcInput by mutableStateOf("")
 
     fun computeCurrentBtcValues(){
+        if (!hasInternetConnection()) {
+            currentBtc = ""
+            btcValue = ""
+            eurValue = ""
+            czkValue = ""
+            return
+        }
         if (userBtcInput.isEmpty()){
             currentBtc = ""
             btcValue = ""
@@ -55,6 +72,13 @@ class MainViewModel: ViewModel() {
     }
 
     fun computeCurrentEthValues(){
+        if (!hasInternetConnection()){
+            currentEth = ""
+            ethValue = ""
+            eurValue = ""
+            czkValue = ""
+            return
+        }
         if (userEthInput.isEmpty()){
             currentEth = ""
             ethValue = ""
@@ -79,6 +103,13 @@ class MainViewModel: ViewModel() {
     }
 
     fun computeCurrentAdaValues(){
+        if (!hasInternetConnection()){
+            currentAda = ""
+            adaValue = ""
+            eurValue = ""
+            czkValue = ""
+            return
+        }
         if (userAdaInput.isEmpty()){
             currentAda = ""
             adaValue = ""
@@ -103,6 +134,13 @@ class MainViewModel: ViewModel() {
     }
 
     fun computeCurrentLtcValues(){
+        if (!hasInternetConnection()){
+            currentLtc = ""
+            ltcValue = ""
+            eurValue = ""
+            czkValue = ""
+            return
+        }
         if (userLtcInput.isEmpty()){
             currentLtc = ""
             ltcValue = ""
@@ -182,6 +220,32 @@ class MainViewModel: ViewModel() {
             val eurValue = json.getJSONObject("rates").getDouble("EUR")
             eurValue
         }
+    }
+
+    fun hasInternetConnection(): Boolean {
+        val connectivityManager = getApplication<CryptoApplication>().getSystemService(
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val activeNetwork = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+            return when {
+                capabilities.hasTransport(TRANSPORT_WIFI) -> true
+                capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
+                capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
+        } else {
+            connectivityManager.activeNetworkInfo?.run {
+                return when (type) {
+                    TYPE_WIFI -> true
+                    TYPE_MOBILE -> true
+                    TYPE_ETHERNET -> true
+                    else -> false
+                }
+            }
+        }
+        return false
     }
 
     private fun String.getAmount(): String {

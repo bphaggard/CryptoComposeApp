@@ -21,7 +21,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.ImagePainter.State.Empty.painter
 import com.example.cryptocompose.ui.theme.oswaldFamily
 
 @Composable
@@ -34,7 +33,7 @@ fun CryptoCard(
     Card(
         modifier = Modifier
             .height(65.dp)
-            .fillMaxWidth(0.9f)
+            .fillMaxWidth(0.95f)
             .clickable{ onClick() }
             .then(modifier),
         shape = RoundedCornerShape(22.dp),
@@ -59,4 +58,5 @@ fun CryptoCard(
                 fontWeight = FontWeight.Light)
         }
     }
+    Spacer(modifier = Modifier.padding(8.dp))
 }

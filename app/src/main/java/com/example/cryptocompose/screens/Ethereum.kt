@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -91,11 +92,14 @@ fun EthereumPrice(
                 //Spacer(modifier = Modifier.padding(20.dp))
                 Button(
                     onClick = {
-                              if (viewModel.userEthInput.isNotEmpty()){
-                                  viewModel.computeCurrentEthValues()
-                              } else {
-                                  Toast.makeText(context, "Enter some value", Toast.LENGTH_SHORT).show()
-                              }
+                        if (!viewModel.hasInternetConnection() && viewModel.userEthInput.isNotEmpty()){
+                            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
+                        }
+                        if (viewModel.userEthInput.isNotEmpty()){
+                            viewModel.computeCurrentEthValues()
+                        } else {
+                            Toast.makeText(context, "Enter some value", Toast.LENGTH_SHORT).show()
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(eth_color),
                     elevation = ButtonDefaults.elevatedButtonElevation(
